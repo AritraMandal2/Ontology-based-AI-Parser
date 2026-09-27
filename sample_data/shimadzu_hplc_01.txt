@@ -1,0 +1,60 @@
+# Shimadzu LabSolutions CDS Telemetry Export
+# Equipment Class: Chromatography
+# --- DETECTOR COMPONENT ---
+System ID: SHIM_LC2030_UV01
+Manufacturer: Shimadzu
+Model: Prominence LC-2030C 3D
+Detector Type: UV-VIS
+Serial Number: S203058491
+Lab Location: QC Lab 102
+Wavelength: 254.0 nm
+Reference Wavelength: 360.0 nm
+Bandwidth: 4.0 nm
+Path Length: 10.0 mm
+Detector Temperature: 25.0 °C
+
+# --- PUMP COMPONENT ---
+Pump Type: Quaternary
+Pressure: 145.2 bar
+Flow Rate: 1.0 mL/min
+Run Time: 12.0 min
+Equilibration Time: 2.0 min
+Mobile Phase A: Water + 0.1% TFA
+Mobile Phase B: Acetonitrile
+pH: 2.5
+
+# --- AUTO INJECTOR COMPONENT ---
+Injection ID: INJ_2026_001
+Vial Position: 1:A,2
+Injection Volume: 10.0 uL
+Sequence ID: SEQ_IBU_BATCH_01
+Start Time: 2026-09-27T10:15:00Z
+Replicate: 1
+
+# --- COLUMN COMPONENT ---
+Column ID: COL_SHIM_C18_994
+Col Manufacturer: Shimadzu Shim-pack
+Col Model: GIS C18
+Col Lot Number: LOT_88412
+Col Stationary Phase: Octadecylsilane C18
+Col Length: 150.0 mm
+Col Temperature: 30.0 °C
+Col Particle Size: 5.0 um
+
+# --- DATA SYSTEM COMPONENT ---
+Sample ID: BATCH_IBU_2026_01
+Sample Name: Ibuprofen Active Assay
+Analyte Name: Ibuprofen API
+Sample Type: Unknown
+Matrix: Tablet Powder
+Dilution Factor: 1.0
+Operator: Analyst_Jane_Doe
+Acquisition software: LabSolutions
+Software Version: 5.92
+Ret. Time (min): 4.25
+Area (mAU*min): 1450.25
+Height (mAU): 285.40
+Symmetry Factor: 1.12
+N (theoretical plates): 8520
+CV (%): 0.45
+Resolution to Prev: 2.45

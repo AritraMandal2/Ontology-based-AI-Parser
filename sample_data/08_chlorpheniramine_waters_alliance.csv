@@ -1,0 +1,2 @@
+Sample ID,Analyte Name,Retention Time,Peak Area,Peak Height,Tailing Factor,Theoretical Plates,% RSD,Vendor,Detector Type
+CHLORPHEN_BATCH_12,Chlorpheniramine Maleate,4.82,2150.90,360.70,1.14,7900,0.25,Waters,PDA

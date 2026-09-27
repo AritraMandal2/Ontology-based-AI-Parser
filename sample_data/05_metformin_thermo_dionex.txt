@@ -1,0 +1,17 @@
+# Thermo Fisher Dionex UltiMate 3000 (Chromeleon CDS)
+System_ID: THERMO_DIONEX_3000
+Equipment_Vendor: Thermo
+Detector_Type: UV-VIS
+Wavelength: 233.0
+Flow_Rate: 0.8
+Col_Model: Acclaim 120 C18
+Col_Temperature: 30.0
+Sample_ID: METFORMIN_API_500MG
+Analyte_Name: Metformin Hydrochloride
+Retention_Time: 1.85
+Peak_Area: 4200.15
+Peak_Height: 780.90
+Tailing_Factor: 1.04
+Theoretical_Plates: 10400
+Percent_RSD: 0.12
+Operator: QA_Manager_Smith

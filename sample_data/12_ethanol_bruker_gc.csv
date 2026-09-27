@@ -1,0 +1,2 @@
+Sample ID,Analyte Name,Retention Time,Peak Area,Peak Height,Tailing Factor,Theoretical Plates,% RSD,Vendor,Detector Type
+ETHANOL_BIO_ASSAY_04,Ethanol (Gas Chromatography),1.45,4850.30,890.60,1.02,12500,0.14,Bruker,FID

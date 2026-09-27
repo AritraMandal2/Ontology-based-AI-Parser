@@ -1,0 +1,57 @@
+/* GxP Chromatography Platform Custom Styles */
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Status Badge Glows */
+.badge-passed {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-quarantined {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    animation: pulse-border 2s infinite;
+}
+
+.badge-flagged {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-approved {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        border-color: rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        border-color: rgba(239, 68, 68, 0.8);
+    }
+}
+
+/* Cytoscape Canvas */
+#cytoscape-canvas {
+    background-color: #090d16;
+}

@@ -1,0 +1,14 @@
+Varian ProStar 230 HPLC Export
+System_ID = VARIAN_PROSTAR_230
+Equipment_Vendor = Varian
+Detector_Type = UV-VIS
+Wavelength = 260.0
+Flow_Rate = 1.0
+Sample_ID = NICOTINE_EXTRACT_09
+Analyte_Name = Nicotine
+Retention_Time = 3.95
+Peak_Area = 1680.20
+Peak_Height = 295.40
+Tailing_Factor = 1.22
+Theoretical_Plates = 6100
+Percent_RSD = 0.38

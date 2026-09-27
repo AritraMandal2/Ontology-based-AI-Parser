@@ -1,0 +1,14 @@
+Hitachi Chromaster HPLC Data Export
+System_ID: HITACHI_CHROMASTER_5000
+Equipment_Vendor: Hitachi
+Detector_Type: UV-VIS
+Wavelength: 228.0
+Flow_Rate: 1.0
+Sample_ID: CBD_HEMP_EXTRACT_99
+Analyte_Name: Cannabidiol (CBD)
+Retention_Time: 6.88
+Peak_Area: 3420.80
+Peak_Height: 540.20
+Tailing_Factor: 1.16
+Theoretical_Plates: 8100
+Percent_RSD: 0.32

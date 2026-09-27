@@ -1,0 +1,18 @@
+{
+  "Equipment_Class": "Chromatography",
+  "Sample_ID": "OMEPRAZOLE_STAB_03",
+  "Analyte_Name": "Omeprazole",
+  "Equipment_Vendor": "Thermo",
+  "Injection_Volume": 5.0,
+  "Retention_Time": 5.12,
+  "Peak_Area": 2980.1,
+  "Peak_Height": 510.8,
+  "Tailing_Factor": 1.07,
+  "Plate_Count": 9900,
+  "Percent_RSD": 0.21,
+  "detector": {
+    "Detector_Type": "UV-VIS",
+    "System_ID": "THERMO_VANQUISH_UHPLC",
+    "Wavelength": 302.0
+  }
+}

@@ -1,0 +1,11 @@
+# Agilent OpenLab CDS Output Report
+# Instrument: 1290 Infinity II LC
+Sample Name: STAB_VAL_FAIL_99
+Peak Name: Impurity B (Degradant)
+Inj Vol: 20.0 uL
+Ret Time: 7.15
+Peak Area: 340.12
+Peak Height: 48.20
+Tailing (USP): 2.15
+Theoretical Plates: 1850
+%RSD: 2.85

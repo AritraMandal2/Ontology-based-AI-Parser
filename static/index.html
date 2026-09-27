@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GxP Chromatography Extraction & Ontology Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Cytoscape.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        gxp: {
+                            bg: '#0B0F17',
+                            card: '#131B2A',
+                            border: '#1E293B',
+                            accent: '#0EA5E9',
+                            quarantine: '#EF4444',
+                            passed: '#10B981',
+                            flagged: '#F59E0B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gxp-bg text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Top Navigation & Audit Header -->
+    <header class="bg-gxp-card border-b border-gxp-border px-6 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 bg-sky-600/20 border border-sky-500/40 rounded-lg flex items-center justify-center text-sky-400 font-bold">
+                <i class="fa-solid fa-flask-vial text-lg"></i>
+            </div>
+            <div>
+                <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+                    Chromatography Equipment-Class Platform
+                    <span class="text-[10px] bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider font-mono">21 CFR Part 11 & ALCOA++</span>
+                </h1>
+                <p class="text-xs text-slate-400">Ontology-Triggered Semantic Extraction & Multi-Component Knowledge Graph</p>
+            </div>
+        </div>
+
+        <!-- User Session & Switch Role Controls -->
+        <div class="flex items-center space-x-4">
+            <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-lg flex items-center gap-3">
+                <div class="text-right">
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">Active User Session</p>
+                    <p id="session-user-id" class="text-xs font-bold text-white font-mono">Dr. Jane Analyst</p>
+                </div>
+                <span id="session-role-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">
+                    Scientist/Analyst
+                </span>
+                <button id="btn-switch-user" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2.5 py-1 rounded transition flex items-center gap-1">
+                    <i class="fa-solid fa-right-from-bracket text-amber-400"></i> Switch
+                </button>
+            </div>
+
+            <button id="btn-reseed" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-rotate-right"></i> Reset Telemetry
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- Top Row: Dual Ingestion & Quick Metrics -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Dual Ingestion Panel -->
+            <div class="lg:col-span-2 bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i> Dual Ingestion & PDF Extractor
+                    </h2>
+                    <span class="text-xs text-slate-400">SHA-256 Hash Enforcement</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- File Drag & Drop Dropzone -->
+                    <div id="dropzone" class="border-2 border-dashed border-sky-500/40 hover:border-sky-400 rounded-lg p-4 text-center cursor-pointer transition bg-slate-800/50 hover:bg-slate-800 flex flex-col items-center justify-center min-h-[120px]">
+                        <i class="fa-solid fa-file-pdf text-2xl text-sky-400 mb-2"></i>
+                        <p class="text-xs font-semibold text-slate-200">Ad-Hoc File Upload (PDF, CSV, TXT)</p>
+                        <p class="text-[11px] text-slate-400">Drag & drop raw instrument TXT, CSV, PDF or click</p>
+                        <input type="file" id="file-input" class="hidden" accept=".txt,.csv,.log,.pdf">
+                    </div>
+
+                    <!-- Cloud Storage Bucket Selector -->
+                    <div class="border border-gxp-border bg-slate-800/30 rounded-lg p-4 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-semibold text-slate-300 mb-1">
+                                <span><i class="fa-brands fa-google-cloud text-amber-400"></i> Auto-Monitored Designated Folder</span>
+                                <span class="text-[10px] text-emerald-400">GCS Active</span>
+                            </div>
+                            <p class="text-[11px] font-mono text-sky-300 bg-slate-900/80 px-2 py-1 rounded border border-slate-700 truncate mb-2">
+                                gs://lab-chromatography-raw-files/
+                            </p>
+                        </div>
+                        <button id="btn-sync-gcs" class="w-full text-xs bg-sky-600 hover:bg-sky-500 text-white font-medium py-1.5 rounded transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> Sync Bucket Telemetry
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Metrics Card -->
+            <div class="bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg flex flex-col justify-between">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-emerald-400"></i> Telemetry Verification Status
+                </h2>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+                        <p class="text-xl font-bold text-emerald-400" id="stat-passed">0</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Passed</p>
+                    </div>
+                    <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+                        <p class="text-xl font-bold text-rose-400" id="stat-quarantined">0</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Quarantined</p>
+                    </div>
+                    <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+                        <p class="text-xl font-bold text-sky-400" id="stat-total">0</p>
+                        <p class="text-[10px] text-slate-400 font-medium">Total Runs</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                    <span>ALCOA++ Digital Audit Logs:</span>
+                    <span class="font-mono text-amber-400 font-bold" id="stat-audit-count">0 events</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Section: Interactive Cytoscape OKG Network & Side Inspector -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Cytoscape OKG Network Canvas -->
+            <div class="lg:col-span-2 bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg flex flex-col">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-nodes text-sky-400"></i> Multi-Component Knowledge Graph (OKG)
+                    </h2>
+                    <div class="flex items-center space-x-2">
+                        <button id="btn-relayout-graph" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded border border-slate-700 transition">
+                            <i class="fa-solid fa-diagram-project"></i> Re-Layout
+                        </button>
+                    </div>
+                </div>
+                <p class="text-[11px] text-slate-400 mb-2">Tap any node to highlight connected network dependencies and display full Equipment Class Hierarchy.</p>
+
+                <!-- Ontology Color Code Definitions Legend -->
+                <div class="mb-3 bg-slate-900/90 border border-slate-800 rounded-lg p-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span class="font-bold text-slate-300 text-[11px] uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-palette text-amber-400"></i> Ontology Color Codes:
+                    </span>
+                    <div class="flex flex-wrap items-center gap-3 text-[11px]">
+                        <div class="flex items-center gap-1.5" title="Central Analyte Major Hub Node">
+                            <span class="w-3.5 h-3.5 rounded-full bg-orange-500 inline-block border border-orange-200 shadow-sm animate-pulse"></span>
+                            <span class="text-orange-400 font-bold">★ Analyte (Central Hub)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Equipment Class Root Node">
+                            <span class="w-3 h-3 rounded-full bg-blue-500 inline-block border border-blue-400 shadow-sm"></span>
+                            <span class="text-blue-300 font-semibold">Class (Chromatography)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Detector Component & Wavelength Data">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block border border-cyan-300 shadow-sm"></span>
+                            <span class="text-cyan-300 font-semibold">Detector</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Pump Component & Flow Rate Data">
+                            <span class="w-3 h-3 rounded-full bg-amber-400 inline-block border border-amber-300 shadow-sm"></span>
+                            <span class="text-amber-300 font-semibold">Pump</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Auto-Injector & Vial Position Data">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block border border-emerald-300 shadow-sm"></span>
+                            <span class="text-emerald-300 font-semibold">Auto-Injector</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Column Component & Temperature Data">
+                            <span class="w-3 h-3 rounded-full bg-purple-400 inline-block border border-purple-300 shadow-sm"></span>
+                            <span class="text-purple-300 font-semibold">Column</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Data System, Method & CDS Acquisition">
+                            <span class="w-3 h-3 rounded-full bg-pink-400 inline-block border border-pink-300 shadow-sm"></span>
+                            <span class="text-pink-300 font-semibold">Data System</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Quarantined or Out-of-Spec Run">
+                            <span class="w-3 h-3 rounded-full bg-rose-500 inline-block border border-rose-400 shadow-sm"></span>
+                            <span class="text-rose-400 font-bold">Quarantined</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cytoscape Canvas -->
+                <div id="cytoscape-canvas" class="w-full h-80 bg-slate-950/80 rounded-lg border border-slate-800 relative"></div>
+            </div>
+
+            <!-- Side Inspector / Node Hierarchy Panel -->
+            <div class="bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg flex flex-col">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-amber-400"></i> Ontology Hierarchy Inspector
+                </h2>
+                
+                <div id="node-inspector-content" class="flex-1 bg-slate-950/80 rounded-lg border border-slate-800 p-3 overflow-y-auto max-h-80 text-xs">
+                    <p class="text-slate-500 italic text-center py-10">Click any Knowledge Graph node to view its connected telemetry & full Equipment Class Hierarchy.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabular Verification Grid -->
+        <div class="bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                    <i class="fa-solid fa-table-list text-emerald-400"></i> Telemetry Verification Grid
+                </h2>
+                
+                <div class="flex items-center space-x-2">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-xs text-slate-500"></i>
+                        <input type="text" id="grid-search" placeholder="Search samples, analytes..." class="bg-slate-800 border border-slate-700 rounded-lg pl-8 pr-3 py-1 text-xs text-white focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div class="flex bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-xs">
+                        <button class="btn-filter bg-sky-500 text-white px-2.5 py-1 rounded" data-filter="ALL">All</button>
+                        <button class="btn-filter text-slate-400 px-2.5 py-1 rounded hover:text-white" data-filter="PASSED">Passed</button>
+                        <button class="btn-filter text-slate-400 px-2.5 py-1 rounded hover:text-white" data-filter="QUARANTINED">Quarantined</button>
+                        <button class="btn-filter text-slate-400 px-2.5 py-1 rounded hover:text-white" data-filter="REVIEWED_APPROVED">Approved</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto rounded-lg border border-slate-800">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-900/90 uppercase text-[10px] text-slate-400 tracking-wider font-mono border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-3">Record ID</th>
+                            <th class="py-3 px-3">Sample ID</th>
+                            <th class="py-3 px-3">Analyte</th>
+                            <th class="py-3 px-3">Retention Time</th>
+                            <th class="py-3 px-3">Peak Area</th>
+                            <th class="py-3 px-3">Tailing</th>
+                            <th class="py-3 px-3">Plates (N)</th>
+                            <th class="py-3 px-3">% RSD</th>
+                            <th class="py-3 px-3">Status</th>
+                            <th class="py-3 px-3 text-right">QA Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grid-body" class="divide-y divide-slate-800/60 font-mono">
+                        <!-- Dynamic Records -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bottom Row: Audit Log & Unmapped Residual Terms -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- ALCOA++ Audit History -->
+            <div class="bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-sky-400"></i> 21 CFR Part 11 & ALCOA++ Digital Audit Trail
+                </h2>
+                <div class="overflow-y-auto max-h-48 rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px]">
+                    <ul id="audit-log-list" class="space-y-2 divide-y divide-slate-900">
+                        <!-- Dynamic Audit Items -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Unmapped Residual Terms -->
+            <div class="bg-gxp-card border border-gxp-border rounded-xl p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-box-archive text-purple-400"></i> Unmapped Residual Terms (QA/QC Refinement)
+                    </h2>
+                    <span class="text-[10px] text-amber-400 font-mono border border-amber-500/30 px-2 py-0.5 rounded bg-amber-500/10">
+                        QA/QC Admin Mapping
+                    </span>
+                </div>
+                <div class="overflow-y-auto max-h-48 rounded-lg border border-slate-800 bg-slate-950 p-2 font-mono text-[11px]">
+                    <ul id="residual-log-list" class="space-y-1.5 divide-y divide-slate-900">
+                        <!-- Dynamic Residual Items -->
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Modal 1: 21 CFR Part 11 Login / Role Selection Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center">
+        <div class="bg-gxp-card border border-sky-500/40 rounded-xl p-6 max-w-md w-full shadow-2xl space-y-5">
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 bg-sky-600/20 border border-sky-500/50 rounded-xl flex items-center justify-center text-sky-400 text-xl font-bold mx-auto mb-2">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="font-bold text-lg text-white">21 CFR Part 11 Authentication</h3>
+                <p class="text-xs text-slate-400">Select user role & identity to access GxP Laboratory Platform</p>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Select User Role:</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="role-analyst" class="btn-role-select bg-sky-600 border border-sky-400 text-white p-3 rounded-lg text-left flex flex-col justify-between hover:bg-sky-500 transition">
+                            <span class="font-bold text-sm">Scientist / Analyst</span>
+                            <span class="text-[10px] text-sky-200 mt-1">Telemetry Ingestion & Graph Analysis</span>
+                        </button>
+                        <button type="button" id="role-qa" class="btn-role-select bg-slate-800 border border-slate-700 text-slate-400 p-3 rounded-lg text-left flex flex-col justify-between hover:bg-slate-700 transition">
+                            <span class="font-bold text-sm text-amber-400">QA/QC Quality Lead</span>
+                            <span class="text-[10px] text-slate-400 mt-1">Full Admin (Quarantine & Residual Mapping)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">User Identifier (ALCOA++ Attributable):</label>
+                    <input type="text" id="login-user-id" value="Dr. Jane Analyst" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:border-sky-500 focus:outline-none text-xs">
+                </div>
+            </div>
+
+            <button id="btn-login-submit" class="w-full py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-lg transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> Authenticate & Start Session
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal 2: QA/QC Manual Residual Token Mapping Modal -->
+    <div id="modal-map-residual" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-gxp-card border border-purple-500/40 rounded-xl p-6 max-w-md w-full shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive text-purple-400"></i> QA/QC Residual Ontology Refinement
+                </h3>
+                <button id="modal-map-close" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <p class="text-xs text-slate-300">Map unmapped residual token: <span id="map-target-token" class="font-mono text-purple-300 font-bold"></span></p>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Target Ontology Field:</label>
+                    <select id="map-ontology-select" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white font-mono focus:border-purple-500 focus:outline-none">
+                        <option value="Sample_ID">Sample_ID</option>
+                        <option value="Analyte_Name">Analyte_Name</option>
+                        <option value="Retention_Time">Retention_Time</option>
+                        <option value="Peak_Area">Peak_Area</option>
+                        <option value="Peak_Height">Peak_Height</option>
+                        <option value="Tailing_Factor">Tailing_Factor</option>
+                        <option value="Plate_Count">Plate_Count</option>
+                        <option value="Percent_RSD">Percent_RSD</option>
+                        <option value="Wavelength">Wavelength</option>
+                        <option value="Flow_Rate">Flow_Rate</option>
+                        <option value="Col_Temperature">Col_Temperature</option>
+                        <option value="Operator">Operator</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">21 CFR Part 11 Reason for Change:</label>
+                    <textarea id="map-reason-input" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white focus:border-purple-500 focus:outline-none" placeholder="Provide technical justification for mapping this vendor token..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-700">
+                <button id="modal-map-cancel" class="px-4 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg">Cancel</button>
+                <button id="modal-map-submit" class="px-4 py-1.5 text-xs bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg shadow-lg">Save & Re-Index Ontology</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: HITL Quarantine QA Approval -->
+    <div id="modal-approve" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-gxp-card border border-gxp-border rounded-xl p-6 max-w-md w-full shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-check text-amber-400"></i> QA HITL Quarantine Review
+                </h3>
+                <button id="modal-close" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-xs text-slate-300">Review and authorize override for record: <span id="modal-rec-id" class="font-mono text-sky-400 font-bold"></span></p>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">QA Approver User ID</label>
+                    <input type="text" id="qa-user-input" readonly class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-amber-300 font-mono text-xs">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">21 CFR Part 11 Justification / Comment</label>
+                    <textarea id="qa-comment-input" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white focus:border-sky-500 focus:outline-none" placeholder="State reason for accepting out-of-spec record..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-700">
+                <button id="modal-cancel-btn" class="px-4 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg">Cancel</button>
+                <button id="modal-submit-btn" class="px-4 py-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg shadow-lg">Authorize & Release</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating ADK Chat Assistant Panel -->
+    <div id="chat-panel" class="fixed bottom-4 right-4 w-80 bg-gxp-card border border-gxp-border rounded-xl shadow-2xl overflow-hidden flex flex-col z-40 transition-all duration-300">
+        <div class="bg-slate-800 px-4 py-2.5 border-b border-slate-700 flex items-center justify-between cursor-pointer" id="chat-header">
+            <span class="text-xs font-bold text-sky-400 flex items-center gap-2">
+                <i class="fa-solid fa-robot"></i> ADK GxP AI Assistant
+            </span>
+            <button id="chat-toggle" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+        <div id="chat-body" class="p-3 h-64 overflow-y-auto space-y-2 text-xs bg-slate-950/60">
+            <div class="bg-slate-800/80 p-2 rounded-lg text-slate-300 max-w-[85%] border border-slate-700">
+                Hello! I am your GxP Chromatography Extraction Assistant. Ask me about system suitability, audit trails, or quarantine records.
+            </div>
+        </div>
+        <div id="chat-footer" class="p-2 bg-slate-800 border-t border-slate-700 flex gap-2">
+            <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-sky-500">
+            <button id="chat-send" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-1 rounded text-xs font-bold"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

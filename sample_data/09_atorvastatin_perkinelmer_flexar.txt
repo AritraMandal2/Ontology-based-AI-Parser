@@ -1,0 +1,15 @@
+PerkinElmer Flexar HPLC System
+System_ID: PERKIN_FLEXAR_01
+Equipment_Vendor: PerkinElmer
+Detector_Type: UV-VIS
+Wavelength: 244.0
+Flow_Rate: 1.2
+Col_Model: Brownlee C18
+Sample_ID: ATORVASTATIN_20MG
+Analyte_Name: Atorvastatin Calcium
+Retention_Time: 6.45
+Peak_Area: 3890.70
+Peak_Height: 610.30
+Tailing_Factor: 1.06
+Theoretical_Plates: 11200
+Percent_RSD: 0.19

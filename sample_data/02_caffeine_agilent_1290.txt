@@ -1,0 +1,17 @@
+# Agilent 1290 Infinity II LC System Export
+System_ID: AGILENT_1290_02
+Equipment_Vendor: Agilent
+Detector_Type: UV-VIS
+Wavelength: 272.0
+Flow_Rate: 1.0
+Col_Model: ZORBAX Eclipse Plus C18
+Col_Temperature: 35.0
+Sample_ID: CAFFEINE_STD_100PPM
+Analyte_Name: Caffeine
+Retention_Time: 3.42
+Peak_Area: 1890.45
+Peak_Height: 312.80
+Tailing_Factor: 1.12
+Theoretical_Plates: 8200
+Percent_RSD: 0.22
+Operator: Dr. Jane Analyst

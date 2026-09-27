@@ -1,0 +1,65 @@
+// Waters Empower 3 Chromatography System Output
+// Equipment Class: Chromatography
+// --- DETECTOR COMPONENT ---
+System ID: WAT_ACQUITY_PDA02
+Manufacturer: Waters
+Model: ACQUITY UPLC PDA Detector
+Detector Type: PDA
+Serial Number: W18PDA992A
+Lab Location: R&D Analytical Lab 3
+NUMBER OF DIODE: 512
+SPECTRAL RANGE: 190-800 nm
+SPECTRAL RESOLUTION: 1.2 nm
+TIME SAMPLING RATE: 20 Hz
+SLIT WIDTH: 4.0 nm
+Reference Wavelength: 380.0 nm
+Path Length: 10.0 mm
+BASELINE NOISE: 12.5 uAU
+LAMP TYPE: Deuterium / Tungsten
+LAMP HOUR: 450.5 hrs
+Detector Temperature: 30.0 °C
+
+// --- PUMP COMPONENT ---
+Pump Type: Binary Solvent Manager
+Pressure: 380.5 bar
+Flow Rate: 0.5 mL/min
+Run Time: 8.0 min
+Equilibration Time: 1.5 min
+Mobile Phase A: 10mM Ammonium Formate pH 3.8
+Mobile Phase B: Methanol / Acetonitrile (50:50)
+
+// --- AUTO INJECTOR COMPONENT ---
+Injection ID: INJ_WAT_1029
+Vial Position: 1:B,4
+Injection Vol: 5.0 uL
+Sequence ID: SEQ_PARACETAMOL_VAL
+Start Time: 2026-09-27T11:00:00Z
+Replicate: 1
+
+// --- COLUMN COMPONENT ---
+Column ID: COL_WAT_BEH_C18
+Col Manufacturer: Waters
+Col Model: ACQUITY UPLC BEH C18
+Col Lot Number: LOT_991823
+Col Stationary Phase: Ethylene Bridged Hybrid C18
+Col Length: 100.0 mm
+Col Temperature: 40.0 °C
+Col Particle Size: 1.7 um
+
+// --- DATA SYSTEM COMPONENT ---
+Sample ID: PARA_QC_REF_102
+Sample Name: Paracetamol Reference Std
+Component: Paracetamol
+Sample Type: Standard
+Matrix: Reference Solution
+Method Name: MTH_PARACETAMOL_V2
+Acquisition software: Empower 3
+Software Version: Feature Release 4
+Operator: Lead_Analyst_Smith
+RT: 2.88
+Peak Area [mAU·min]: 2105.80
+Peak Height [mAU]: 410.15
+USP Tailing: 1.18
+Plates (USP): 11200
+% RSD: 0.28
+Resolution to Prev: 3.10

@@ -1,0 +1,60 @@
+# Thermo Fisher Chromeleon Telemetry Export - FLD / RI Detector Test
+# Equipment Class: Chromatography
+
+# --- DETECTOR COMPONENT ---
+System ID: THERMO_VANQUISH_FLD01
+Manufacturer: Thermo Fisher Scientific
+Model: Vanquish Fluorescence Detector
+Detector Type: FLD
+Serial Number: TF993812
+Lab Location: Bio-Analytical Suite
+EXCITATION WAVELENGTH: 280.0 nm
+EMISSION WAVELENGTH: 340.0 nm
+EXCITATION BANDWIDTH: 20.0 nm
+EMISSION BANDWIDTH: 20.0 nm
+VOLTAGE: 650.0 V
+LAMP TYPE: Xenon Flash Lamp
+LAMP POWER: 15.0 W
+LAMP HOUR: 120.0 hrs
+Detector Temperature: 25.0 °C
+
+# --- PUMP COMPONENT ---
+Pump Type: Isocratic Dual Pump
+Pressure: 210.0 bar
+Flow Rate: 0.8 mL/min
+Run Time: 15.0 min
+Mobile Phase A: Water:Methanol (70:30)
+
+# --- AUTO INJECTOR COMPONENT ---
+Injection ID: INJ_FLD_8820
+Vial Position: 2:C,1
+Injection Volume: 2.0 uL
+Sequence ID: SEQ_BIO_PROTEIN_01
+Start Time: 2026-09-27T12:30:00Z
+Replicate: 1
+
+# --- COLUMN COMPONENT ---
+Column ID: COL_THERMO_PROT
+Col Manufacturer: Thermo Scientific
+Col Model: Accucore C18
+Col Lot Number: LOT_3381
+Col Length: 150.0 mm
+Col Temperature: 35.0 °C
+Col Particle Size: 2.6 um
+
+# --- DATA SYSTEM COMPONENT ---
+Sample ID: BIO_HER2_REF_01
+Sample Name: Trastuzumab Tryptic Digest
+Analyte Name: Tryptic Peptide Frag 1
+Sample Type: Unknown
+Matrix: Formulation Buffer
+Acquisition software: Chromeleon
+Software Version: 7.3.2
+Operator: Dr_Alex_Vance
+tR (minutes): 6.85
+Area: 3200.40
+Height (mAU): 580.20
+As (USP): 1.10
+N [USP]: 14200
+Rel. Std. Dev. (%): 0.35
+Resolution to Prev: 2.80

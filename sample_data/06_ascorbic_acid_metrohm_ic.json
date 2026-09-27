@@ -1,0 +1,25 @@
+{
+  "Equipment_Class": "Chromatography",
+  "Sample_ID": "VITAMIN_C_JUICE_01",
+  "Analyte_Name": "Ascorbic Acid (Vitamin C)",
+  "Equipment_Vendor": "Metrohm",
+  "Injection_Volume": 20.0,
+  "Retention_Time": 3.1,
+  "Peak_Area": 1450.6,
+  "Peak_Height": 280.3,
+  "Tailing_Factor": 1.09,
+  "Plate_Count": 5400,
+  "Percent_RSD": 0.45,
+  "detector": {
+    "Detector_Type": "Conductivity",
+    "System_ID": "METROHM_940_IC",
+    "Manufacturer": "Metrohm",
+    "Model": "940 Professional IC Vario",
+    "Temperature": 30.0
+  },
+  "pump": {
+    "Pump_Type": "Isocratic IC",
+    "Flow_Rate": 0.7,
+    "Pressure": 120.0
+  }
+}

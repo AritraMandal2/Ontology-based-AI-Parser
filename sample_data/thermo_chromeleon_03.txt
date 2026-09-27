@@ -1,0 +1,11 @@
+# Thermo Fisher Chromeleon 7.3 CDS Telemetry Export
+# System: Vanquish Flex UHPLC
+Sample Identification: ASP_LOT_8849
+Target Molecule: Aspirin (Acetylsalicylic Acid)
+Volume [uL]: 2.0
+tR (minutes): 3.62
+Area: 1890.30
+Height (mAU): 320.60
+As (USP): 1.25
+N [USP]: 9840
+Rel. Std. Dev. (%): 0.85

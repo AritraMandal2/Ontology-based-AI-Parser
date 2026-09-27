@@ -1,0 +1,2 @@
+Sample ID,Component Name,Ret. Time,Peak Area,Peak Height,Tailing Factor,Theoretical Plates,% RSD,System ID,Vendor,Detector Type,Excitation Wavelength,Emission Wavelength
+IBUPROFEN_LOT_88,Ibuprofen,5.65,3100.50,520.40,1.18,6800,0.31,SHIMADZU_LC20AD,Shimadzu,FLD,224.0,290.0

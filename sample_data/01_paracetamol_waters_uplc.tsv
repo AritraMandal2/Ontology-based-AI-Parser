@@ -1,0 +1,2 @@
+Sample ID	Component Name	Ret. Time (min)	Peak Area (mAU*s)	Peak Height (mAU)	Tailing Factor	Theoretical Plates (N)	Percent RSD (%)	System ID	Vendor	Detector Type	Wavelength (nm)	Flow Rate (mL/min)
+PARACETAMOL_VAL_01	Paracetamol (Acetaminophen)	2.15	2450.80	480.20	1.08	9500	0.18	WATERS_ACQUITY_UPLC_01	Waters	PDA	243.0	0.60
